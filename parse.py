@@ -28,6 +28,7 @@ NOME_DOTTORE_RE = re.compile(r"(?P<nome>[\w\s']+) \[(?P<codice>\w+)\]")
 BLOCCO_ASSOCIAZIONE_RE = re.compile(r"Associazione:")
 INDIRIZZO_RE = re.compile(r"(?P<indirizzo>.+) \(TORINO\) Telefono: ?(?P<telefono>\d*)?")
 FAX_RE = re.compile(r"FAX \d+")
+TELEFONO_RE = re.compile(r"(TELEFONO.*:\s*)?(?P<telefono>\d+)$")
 
 BLOCCO_ORARI_RE = re.compile(r"Giorno")
 GIORNO_RE = re.compile(r"(?P<giorno>Lunedi|Martedi|Mercoledi|Giovedi|Venerdi)")
@@ -112,7 +113,7 @@ if __name__ == '__main__':
                 dottore['indirizzi'].append(indirizzo)
             indirizzo = {
                 'indirizzo': match_dict['indirizzo'],
-                'telefono': match_dict['telefono'],
+                'telefono': [match_dict['telefono']],
                 'giorni': [],
                 'ore': [],
                 'note': [],
@@ -127,6 +128,12 @@ if __name__ == '__main__':
 
         match = FAX_RE.match(line)
         if match:
+            continue
+
+        match = TELEFONO_RE.match(line)
+        if match:
+            match_dict = match.groupdict()
+            indirizzo['telefono'].append(match_dict['telefono'])
             continue
 
         match = BLOCCO_ORARI_RE.match(line)
