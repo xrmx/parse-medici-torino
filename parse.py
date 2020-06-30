@@ -2,6 +2,7 @@ import datetime
 import fileinput
 import json
 import re
+import sys
 import unittest
 
 
@@ -168,6 +169,8 @@ if __name__ == '__main__':
         if blocco_note:
             indirizzo['note'].append(line.strip())
             continue
+
+        print(line, file=sys.stderr)
 
     # Proviamo a sistemare gli orari
     for dottore in dottori:
