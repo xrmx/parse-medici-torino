@@ -19,8 +19,8 @@ MESI = {
     'dicembre': 12,
 }
 
-AGGIORNAMENTO_RE = re.compile(r"Aggiornamento: (?P<giorno>\d+) (?P<mese>\w+) (?P<anno>\d+)")
-CIRCOSCRIZIONE_RE = re.compile(r"Circoscrizione (?P<numero>\d+): (?P<nome>.+)")
+AGGIORNAMENTO_RE = re.compile(r"AGGIORNAMENTO: (?P<giorno>\d+) (?P<mese>\w+) (?P<anno>\d+)")
+CIRCOSCRIZIONE_RE = re.compile(r"CIRCOSCRIZIONE (?P<numero>\d+): (?P<nome>.+)")
 MMG_RE = re.compile(r"MMG")
 
 NOME_DOTTORE_RE = re.compile(r"(?P<nome>[\w\s]+) \[(?P<codice>\w+)\]")
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             match_dict = match.groupdict()
             update = datetime.date(
                 int(match_dict['anno']),
-                MESI[match_dict['mese']],
+                MESI[match_dict['mese'].lower()],
                 int(match_dict['giorno'])
             )
             documento['aggiornamento'] = update.isoformat()
