@@ -31,7 +31,7 @@ FAX_RE = re.compile(r"FAX \d+")
 TELEFONO_RE = re.compile(r"(TELEFONO.*:\s*)?(?P<telefono>\d+)$")
 
 BLOCCO_ORARI_RE = re.compile(r"Giorno")
-GIORNO_RE = re.compile(r"(?P<giorno>Lunedi|Martedi|Mercoledi|Giovedi|Venerdi)")
+GIORNO_RE = re.compile(r"(?P<giorno>Lunedi|Martedi|Mercoledi|Giovedi|Venerdi|Sabato)")
 ORARI_DA_RE = re.compile(r"Dalle")
 ORARIO_RE = re.compile(r"(?P<orario>\d{2}:\d{2})")
 ORARI_A_RE = re.compile(r"Alle")
