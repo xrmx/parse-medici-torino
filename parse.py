@@ -95,7 +95,7 @@ if __name__ == '__main__':
             dottore = {
                 'nome': match_dict['nome'],
                 'codice': match_dict['codice'],
-                'associazione': None,
+                'associazione': [],
                 'indirizzi': [],
             }
             continue
@@ -123,8 +123,7 @@ if __name__ == '__main__':
 
         # ci sono dottori senza associazione
         if blocco_associazione:
-            dottore['associazione'] = line.strip()
-            blocco_associazione = False
+            dottore['associazione'].append(line.strip())
             continue
 
         match = FAX_RE.match(line)
