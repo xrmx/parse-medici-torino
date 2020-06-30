@@ -172,6 +172,12 @@ if __name__ == '__main__':
 
         print(line, file=sys.stderr)
 
+    # l'ultimo dottore
+    if dottore:
+        dottore['indirizzi'].append(indirizzo)
+        dottori.append(dottore)
+        indirizzo = None
+
     # Proviamo a sistemare gli orari
     for dottore in dottori:
         for indirizzo in dottore['indirizzi']:
