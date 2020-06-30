@@ -2,6 +2,7 @@ import datetime
 import fileinput
 import json
 import re
+import unittest
 
 
 MESI = {
@@ -23,7 +24,7 @@ AGGIORNAMENTO_RE = re.compile(r"AGGIORNAMENTO: (?P<giorno>\d+) (?P<mese>\w+) (?P
 CIRCOSCRIZIONE_RE = re.compile(r"CIRCOSCRIZIONE (?P<numero>\d+): (?P<nome>.+)")
 MMG_RE = re.compile(r"MMG")
 
-NOME_DOTTORE_RE = re.compile(r"(?P<nome>[\w\s]+) \[(?P<codice>\w+)\]")
+NOME_DOTTORE_RE = re.compile(r"(?P<nome>[\w\s']+) \[(?P<codice>\w+)\]")
 BLOCCO_ASSOCIAZIONE_RE = re.compile(r"Associazione:")
 INDIRIZZO_RE = re.compile(r"(?P<indirizzo>.+) \(TORINO\) Telefono: ?(?P<telefono>\d*)?")
 FAX_RE = re.compile(r"FAX \d+")
@@ -178,3 +179,10 @@ if __name__ == '__main__':
 
     documento['dottori'] = dottori
     print(json.dumps(documento))
+
+
+class ParseTestCase(unittest.TestCase):
+    def test_nome_dottore_deve_fare_il_match_degli_apostrofi(self):
+        match = NOME_DOTTORE_RE.match("NUR ADDO' [01234]")
+        match_dict = match.groupdict()
+        self.assertEqual(match_dict, {"nome": "NUR ADDO'", "codice": "01234"})
