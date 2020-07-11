@@ -63,7 +63,7 @@ Una volta convertito il pdf in testo è possibile trasformarlo in formato `json`
 cat miofile.txt | python3 parse.py > miofile.json
 ```
 
-E` possibile fare il geocoding degli indirizzi tramite l'API di [Mapbox][https://mapbox.com] passando
+E` possibile fare il geocoding degli indirizzi tramite l'API di [Mapbox](https://mapbox.com) passando
 un token (va bene quello pubblico di default) tramite variabile di ambiente da esportare prima della
 conversione con:
 
