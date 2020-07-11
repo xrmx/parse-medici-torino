@@ -1,9 +1,14 @@
 import datetime
 import fileinput
+import functools
 import json
+import os
 import re
 import sys
 import unittest
+import urllib.parse
+
+import requests
 
 
 MESI = {
@@ -39,7 +44,26 @@ ORARI_A_RE = re.compile(r"Alle")
 BLOCCO_NOTE_RE = re.compile(r"Note")
 
 
+@functools.lru_cache(maxsize=128)
+def geocoding(indirizzo, token):
+    mapbox_geocoding_v5 = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
+    url = "{}{}.json?limit=1&country=IT&access_token={}".format(
+        mapbox_geocoding_v5,
+        urllib.parse.quote(indirizzo, safe=""),
+        token,
+    )
+    response = requests.get(url)
+    data = response.json()
+    feature = data["features"][0]
+    if "address" in feature["place_type"]:
+        return feature["center"]
+    return None
+
+
 if __name__ == '__main__':
+
+    # se abbiamo un token di mapbox nell'environment facciamo il geocoding degli indirizzi
+    mapbox_token = os.getenv("MAPBOX_ACCESS_TOKEN")
 
     documento = {
         'aggiornamento': None,
@@ -177,9 +201,9 @@ if __name__ == '__main__':
         dottori.append(dottore)
         indirizzo = None
 
-    # Proviamo a sistemare gli orari
     for dottore in dottori:
         for indirizzo in dottore['indirizzi']:
+            # Proviamo a sistemare gli orari
             num_orari = len(indirizzo['ore']) / 2
             indirizzo['orario_affidabile'] = num_orari == len(indirizzo['giorni'])
             num_orari = int(num_orari)
@@ -191,6 +215,10 @@ if __name__ == '__main__':
                 ]
             else:
                 indirizzo['orari'] = [{'giorno': None, 'da': da, 'a': a} for da, a in orari]
+
+            if mapbox_token:
+                posizione = geocoding(indirizzo['indirizzo'], mapbox_token)
+                indirizzo['posizione'] = posizione
 
     documento['dottori'] = dottori
     print(json.dumps(documento))

@@ -7,7 +7,13 @@ I file in formato JSON sono disponibili nel repository [medici-asl-torino](https
 
 ## Requisiti
 
-Il programma di conversione richiede Python 3 installato.
+Il programma di conversione richiede Python 3 installato e la libreria requests.
+
+Su Debian si installano con:
+
+```
+sudo apt install python3 python3-requests
+```
 
 ## Uso
 
@@ -55,4 +61,12 @@ Una volta convertito il pdf in testo è possibile trasformarlo in formato `json`
 
 ```
 cat miofile.txt | python3 parse.py > miofile.json
+```
+
+E` possibile fare il geocoding degli indirizzi tramite l'API di [Mapbox][https://mapbox.com] passando
+un token (va bene quello pubblico di default) tramite variabile di ambiente da esportare prima della
+conversione con:
+
+```
+export MAPBOX_ACCESS_TOKEN=ilmiotoken
 ```
