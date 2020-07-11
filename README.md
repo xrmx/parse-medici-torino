@@ -1,11 +1,13 @@
-# parse-medici-torino
+# Parse medici ASL Torino
 
 Script per trasformare i pdf dei medici di medicina generale della ASL Città di Torino in formato
 machine readable.
 
+I file in formato JSON sono disponibili nel repository [medici-asl-torino](https://github.com/xrmx/medici-asl-torino).
+
 ## Requisiti
 
-Il programma di conversione richiede python 3 installato.
+Il programma di conversione richiede Python 3 installato.
 
 ## Uso
 
