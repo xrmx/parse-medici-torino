@@ -57,6 +57,7 @@ def geocoding(indirizzo, token):
     feature = data["features"][0]
     if "address" in feature["place_type"]:
         return feature["center"]
+    print("Geocoding fallito per {}".format(indirizzo), file=sys.stderr)
     return None
 
 
