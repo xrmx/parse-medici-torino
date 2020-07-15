@@ -10,6 +10,7 @@ import urllib.parse
 
 import requests
 
+from fixups import ESPANDI_INDIRIZZO
 
 MESI = {
     'gennaio': 1,
@@ -44,8 +45,7 @@ ORARI_A_RE = re.compile(r"Alle")
 BLOCCO_NOTE_RE = re.compile(r"Note")
 
 
-@functools.lru_cache(maxsize=128)
-def geocoding(indirizzo, token):
+def do_geocoding(indirizzo, token):
     mapbox_geocoding_v5 = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
     url = "{}{}.json?limit=1&country=IT&access_token={}".format(
         mapbox_geocoding_v5,
@@ -57,6 +57,24 @@ def geocoding(indirizzo, token):
     feature = data["features"][0]
     if "address" in feature["place_type"]:
         return feature["center"]
+    return None
+
+
+@functools.lru_cache(maxsize=128)
+def geocoding(indirizzo, token):
+    posizione = do_geocoding(indirizzo, token)
+    if posizione:
+        return posizione
+
+    # se non abbiamo trovato l'indirizzo proviamo a sistemarlo a mano
+    correzione = [(k, v) for k, v in ESPANDI_INDIRIZZO.items() if k in indirizzo]
+    if correzione:
+        via, via_corretta = correzione[0]
+        indirizzo_corretto = indirizzo.replace(via, via_corretta)
+        posizione = do_geocoding(indirizzo_corretto, token)
+        if posizione:
+            return posizione
+
     print("Geocoding fallito per {}".format(indirizzo), file=sys.stderr)
     return None
 
