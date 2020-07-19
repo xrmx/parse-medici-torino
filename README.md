@@ -70,3 +70,8 @@ conversione con:
 ```
 export MAPBOX_ACCESS_TOKEN=ilmiotoken
 ```
+
+### Creazione GeoJSON
+
+
+python3 json2geojson.py miofile.json miofile2.json > miofile.geojson
