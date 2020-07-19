@@ -33,7 +33,7 @@ MMG_RE = re.compile(r"MMG")
 
 NOME_DOTTORE_RE = re.compile(r"(?P<nome>[\w\s']+) \[(?P<codice>\w+)\]")
 BLOCCO_ASSOCIAZIONE_RE = re.compile(r"Associazione:")
-INDIRIZZO_RE = re.compile(r"(?P<indirizzo>.+) \(TORINO\) Telefono: ?(?P<telefono>\d*)?")
+INDIRIZZO_RE = re.compile(r"(?P<indirizzo>.+) TORINO (?P<cap>\d+) \(TORINO\) Telefono: ?(?P<telefono>\d*)?")
 FAX_RE = re.compile(r"FAX \d+")
 TELEFONO_RE = re.compile(r"(TELEFONO.*:\s*)?(?P<telefono>\d+)$")
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
             if indirizzo:
                 dottore['indirizzi'].append(indirizzo)
             indirizzo = {
-                'indirizzo': match_dict['indirizzo'],
+                'indirizzo': '{} {} TORINO'.format(match_dict['indirizzo'], match_dict['cap']),
                 'telefono': [match_dict['telefono']],
                 'giorni': [],
                 'ore': [],
