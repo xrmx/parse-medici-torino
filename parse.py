@@ -56,7 +56,8 @@ def do_geocoding(indirizzo, token):
     data = response.json()
     feature = data["features"][0]
     if "address" in feature["place_type"]:
-        return feature["center"]
+        if "Turin" in feature["place_name"] or "Collegno" in feature["place_name"]:
+            return feature["center"]
     return None
 
 
