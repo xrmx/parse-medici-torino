@@ -63,6 +63,8 @@ def do_geocoding(indirizzo, token):
 
 @functools.lru_cache(maxsize=128)
 def geocoding(indirizzo, token):
+    # sostituiamo i sc. con scala per farli piacere a mapbox
+    indirizzo = indirizzo.replace(" sc. ", " scala ")
     posizione = do_geocoding(indirizzo, token)
     if posizione:
         return posizione
