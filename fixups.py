@@ -3,6 +3,9 @@
 ESPANDI_INDIRIZZO = {
     "CORSO A. DE GASPERI": "CORSO ALCIDE DE GASPERI",
     "CORSO A. TASSONI": "CORSO ALESSANDRO TASSONI",
+    # TODO: in openstreetmap mancava la città di questo indirizzo
+    # vediamo se tra qualche gg si sistema automagicamente
+    "CORSO BELGIO 86 int. 11": "CORSO BELGIO 86",
     "CORSO F. BRUNELLESCHI": "CORSO FILIPPO BRUNELLESCHI",
     "CORSO G. AGNELLI": "CORSO GIOVANNI AGNELLI",
     "CORSO P. MARONCELLI": "CORSO PIERO MARONCELLI",
