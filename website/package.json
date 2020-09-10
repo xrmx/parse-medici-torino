@@ -1,0 +1,23 @@
+{
+  "name": "parse-medici-torino",
+  "version": "1.0.0",
+  "description": "Sito web per ricerca medici Torino",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/endorama/parse-medici-torino.git"
+  },
+  "author": "MGF2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/endorama/parse-medici-torino/issues"
+  },
+  "homepage": "https://github.com/endorama/parse-medici-torino#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
