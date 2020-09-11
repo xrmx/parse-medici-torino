@@ -1,0 +1,21 @@
+body { 
+    
+    margin: 0; 
+    padding: 0; 
+}
+
+#map { 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    width: 100%; 
+}
+
+#input { 
+    
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 200px;
+    height: 80px;
+}

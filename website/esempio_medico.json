@@ -1,0 +1,25 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [7.662497,
+                    45.048368
+                ]
+            },
+            "properties": {
+                "circoscrizione": "1",
+                "mmg": true,
+                "nome": "ARALDI MARCO",
+                "codice": "019547Z",
+                "indirizzo": "VIA SPALLANZANI 6/B 10134 TORINO",
+                "associazione": ["ASL TO GRUPPO 151"],
+                "orari": [0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0
+                ]
+            }
+        }
+    ]
+}
