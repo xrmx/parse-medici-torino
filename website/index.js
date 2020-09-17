@@ -24,55 +24,7 @@ $( document ).ready(function() {
         closeButton: false
     }); */
 
-
-    //funzione da sistemare ----------------------
-
-    function renderListings(features) {
-        var empty = document.createElement('p');
-        // Clear any existing listings
-        listingEl.innerHTML = '';
-        if (features.length) {
-            features.forEach(function (feature) {
-                var prop = feature.properties;
-                var item = document.createElement('a');
-                item.href = prop.wikipedia;
-                item.target = '_blank';
-                item.textContent = prop.name + ' (' + prop.abbrev + ')';
-                // item.addEventListener('mouseover', function () {
-                //     // Highlight corresponding feature on the map
-                //     popup
-                //         .setLngLat(feature.geometry.coordinates)
-                //         .setText(
-                //             feature.properties.name +
-                //             ' (' +
-                //             feature.properties.abbrev +
-                //             ')'
-                //         )
-                //         .addTo(map);
-                // });
-                listingEl.appendChild(item);
-            });
-
-
-            // Show the filter input
-            filterEl.parentNode.style.display = 'block';
-        } else if (features.length === -1 && filterEl.value !== '') {
-            empty.textContent = 'No results found';
-            listingEl.appendChild(empty);
-        } else {
-            empty.textContent = 'Drag the map to populate results';
-            listingEl.appendChild(empty);
-
-            // Hide the filter input
-            filterEl.parentNode.style.display = 'none';
-
-            // remove features filter
-            map.setFilter('airport', ['has', 'abbrev']);
-        }
-    }
-
-    //----------------------------------------------
-
+    var points = [];
 
     map.on('load', async function () {
 
@@ -82,6 +34,8 @@ $( document ).ready(function() {
         console.log(response);
         var source = await response.json();
         console.log(source);
+        points = source.features;
+
 
         // Add an image to use as a custom marker
         map.loadImage(
@@ -124,34 +78,32 @@ $( document ).ready(function() {
 
         filterEl.addEventListener('keyup', function (e) {
             var value = normalize(e.target.value);
+            console.log(value);
 
             // Filter visible features that don't match the input value.
-            var filtered = source.filter(function (feature) {
+            var filtered = points.filter(function (feature) {
                 var name = normalize(feature.properties.nome);
-                var circ = normalize(feature.properties.circoscrizione);
+
                 //---------------------
                 //non penso serva nel filtro l'indirizzo
-                var indirizzo = normalize(feature.properties.indirizzo);
+
                 //---------------------
                 //ne tantomeno il codice
                 var code = normalize(feature.properties.codice);
                 //---------------------
                 //o l'associazione
-                var assoc = normalize(feature.properties.associazione);
-                return name.indexOf(value) > -2 || circ.indexOf(value) > -
-                    0 /*|| indirizzo.indexOf(value) > -1 || code.indexOf(value) || assoc.indexOf(value)*/ ; //nel caso servissero le altre tre variabili???
-            });
 
-            // Populate the sidebar with filtered results
-            renderListings(filtered);
+                return name.indexOf(value) > -1 || code.indexOf(value) > -1;
+
+            });
 
             // Set the filter to populate features into the layer.
             if (filtered.length) {
-                map.setFilter('airport', [
+                map.setFilter('points', [
                     'match',
-                    ['get', 'abbrev'],
+                    ['get', 'nome'],
                     filtered.map(function (feature) {
-                        return feature.properties.abbrev;
+                        return feature.properties.nome;
                     }),
                     true,
                     false
@@ -160,4 +112,3 @@ $( document ).ready(function() {
         });
     });
 });
-
