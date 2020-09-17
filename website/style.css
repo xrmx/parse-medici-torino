@@ -29,6 +29,9 @@ body {
 }
 
 .info {
+  position: absolute;
+  top: 0;
+  right: 0;
   background-color: #fff;
   height: 100vh;
 }
