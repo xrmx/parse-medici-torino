@@ -1,10 +1,10 @@
 $( document ).ready(function() {
     mapboxgl.accessToken =
-        'pk.eyJ0IjoiYW1vc2dpdG8iLCJhIjoiY2tleGIxc3N2NG16YzJzcGN1M205dnM3OSJ9.BfdMz6HWg9BBkAOV-qNj0w';
+        'pk.eyJ1IjoiYW1vc2dpdG8iLCJhIjoiY2tmNzlpNmJjMDBhNzJxbzl6dnNibW1vayJ9.YjOVYS060osnxKTXpR-6uA';
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/streets-v10', // style URL
-        center: [6.7, 45.06], // starting position [lng, lat]
+        center: [7.6, 45.05], // starting position [lng, lat]
         zoom: 10 // starting zoom
 
     });
@@ -16,7 +16,7 @@ $( document ).ready(function() {
 
     // Holds visible airport features for filtering
 
-    var airports = [];
+    var  airports= [];
 
     // Create a popup, but don't add it to the map yet.
 
@@ -38,18 +38,18 @@ $( document ).ready(function() {
                 item.href = prop.wikipedia;
                 item.target = '_blank';
                 item.textContent = prop.name + ' (' + prop.abbrev + ')';
-                item.addEventListener('mouseover', function () {
-                    // Highlight corresponding feature on the map
-                    popup
-                        .setLngLat(feature.geometry.coordinates)
-                        .setText(
-                            feature.properties.name +
-                            ' (' +
-                            feature.properties.abbrev +
-                            ')'
-                        )
-                        .addTo(map);
-                });
+                // item.addEventListener('mouseover', function () {
+                //     // Highlight corresponding feature on the map
+                //     popup
+                //         .setLngLat(feature.geometry.coordinates)
+                //         .setText(
+                //             feature.properties.name +
+                //             ' (' +
+                //             feature.properties.abbrev +
+                //             ')'
+                //         )
+                //         .addTo(map);
+                // });
                 listingEl.appendChild(item);
             });
 
@@ -85,7 +85,7 @@ $( document ).ready(function() {
 
         // Add an image to use as a custom marker
         map.loadImage(
-            'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+            '/geolocation-icon-png-5.png',
             function (error, image) {
                 if (error) throw error;
                 map.addImage('custom-marker', image);
