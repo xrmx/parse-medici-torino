@@ -22,6 +22,7 @@
     "http-server": "^0.12.3"
   },
   "dependencies": {
-    "simple-autoreload-server": "0.2.7"
+    "simple-autoreload-server": "0.2.7",
+    "spectre.css": "0.5.9"
   }
 }
