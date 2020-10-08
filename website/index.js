@@ -1,7 +1,49 @@
+var points = []
+var map
+
+function applyFilter(value) {
+
+    
+    // Filter visible features that don't match the input value.
+    var filtered = points.filter(function (feature) {
+        var name = normalize(feature.properties.nome);
+
+        //---------------------
+        //non penso serva nel filtro l'indirizzo
+
+        //---------------------
+        //ne tantomeno il codice
+        var code = normalize(feature.properties.codice);
+        //---------------------
+        //o l'associazione
+
+        return name.indexOf(value) > -1 || code.indexOf(value) > -1;
+
+    });
+
+    // Set the filter to populate features into the layer.
+    if (filtered.length) {
+        map.setFilter('points', [
+            'match',
+            ['get', 'indirizzo'],
+            filtered.map(function (feature) {
+                return feature.properties.indirizzo;
+            }),
+            true,
+            false
+        ]);
+    }
+}
+
+function normalize(string) {
+    return string.trim().toLowerCase();
+}
+
 $( document ).ready(function() {
+
     mapboxgl.accessToken =
         'pk.eyJ1IjoiYW1vc2dpdG8iLCJhIjoiY2tmNzlpNmJjMDBhNzJxbzl6dnNibW1vayJ9.YjOVYS060osnxKTXpR-6uA';
-    var map = new mapboxgl.Map({
+     map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/streets-v10', // style URL
         center: [7.6, 45.05], // starting position [lng, lat]
@@ -24,7 +66,18 @@ $( document ).ready(function() {
         closeButton: false
     }); */
 
-    var points = [];
+
+    $('#filter').on('keydown', function(event) {
+
+        if (event.which == 13 || event.keyCode == 13) {
+            
+            var value = normalize(event.target.value);
+                console.log(value);
+
+            applyFilter(value)
+        
+        }
+    })
 
     map.on('load', async function () {
 
@@ -70,45 +123,7 @@ $( document ).ready(function() {
             }
         );
 
-        function normalize(string) {
-            return string.trim().toLowerCase();
-        }
-
-        var filterEl = document.getElementById('filter');
-
-        filterEl.addEventListener('keyup', function (e) {
-            var value = normalize(e.target.value);
-            console.log(value);
-
-            // Filter visible features that don't match the input value.
-            var filtered = points.filter(function (feature) {
-                var name = normalize(feature.properties.nome);
-
-                //---------------------
-                //non penso serva nel filtro l'indirizzo
-
-                //---------------------
-                //ne tantomeno il codice
-                var code = normalize(feature.properties.codice);
-                //---------------------
-                //o l'associazione
-
-                return name.indexOf(value) > -1 || code.indexOf(value) > -1;
-
-            });
-
-            // Set the filter to populate features into the layer.
-            if (filtered.length) {
-                map.setFilter('points', [
-                    'match',
-                    ['get', 'nome'],
-                    filtered.map(function (feature) {
-                        return feature.properties.nome;
-                    }),
-                    true,
-                    false
-                ]);
-            }
-        });
-    });
+        
+  
+    }); 
 });
