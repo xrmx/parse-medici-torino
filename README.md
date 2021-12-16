@@ -47,12 +47,12 @@ pdftotext miofile.pdf miofile.txt
 
 ### Conversione pdf con Apache PDFBox
 
-Scaricare la versione `pdfbox-app` dalla pagina di [download](https://pdfbox.apache.org/download.cgi#20x). Al momento l'ultima versione disponibile è la 2.0.20.
+Scaricare la versione `pdfbox-app` dalla pagina di [download](https://pdfbox.apache.org/download.html). Al momento l'ultima versione stabile è la 2.0.24.
 
 Il file pdf si può convertire in testo con:
 
 ```
-java -jar pdfbox-app-2.0.20.jar miofile.pdf miofile.txt
+java -jar pdfbox-app-2.0.24.jar ExtractText miofile.pdf miofile.txt
 ```
 
 ### Creazione dei dati machine readable
